@@ -1,8 +1,8 @@
 # react-headless-modal
 
-> Made with create-react-library
+> ❗️ Still working with it, not released yet.
 
-[![NPM](https://img.shields.io/npm/v/react-headless-modal.svg)](https://www.npmjs.com/package/react-headless-modal) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-headless-modal.svg)](https://www.npmjs.com/package/react-headless-modal)
 
 ## Install
 
