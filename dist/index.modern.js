@@ -1,50 +1,53 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-const HeadlessModal = ({
-  defaultIsVisible,
-  onIsVisible,
-  children
-}) => {
-  const existedModalElem = document.querySelector('#modal');
+var HeadlessModal = function HeadlessModal(_ref) {
+  var defaultIsVisible = _ref.defaultIsVisible,
+      onIsVisible = _ref.onIsVisible,
+      children = _ref.children;
+  var existedModalElem = document.querySelector('#modal');
 
   if (!existedModalElem) {
-    const modalElem = document.createElement('div');
-    const bodyElem = document.querySelector('body');
+    var modalElem = document.createElement('div');
+    var bodyElem = document.querySelector('body');
     modalElem.id = 'modal';
     bodyElem && bodyElem.append(modalElem);
   }
 
-  const [isShown, setIsShown] = useState(defaultIsVisible || false);
+  var _React$useState = useState(defaultIsVisible || false),
+      isShown = _React$useState[0],
+      setIsShown = _React$useState[1];
 
-  const onClose = () => {
+  var onClose = function onClose() {
     setIsShown(false);
   };
 
-  useEffect(() => {
+  useEffect(function () {
     setIsShown(onIsVisible);
   }, [onIsVisible]);
-  const modalDOM = document.getElementById('modal');
+  var modalDOM = document.getElementById('modal');
   return isShown ? createPortal(children({
-    onClose
+    onClose: onClose
   }), modalDOM) : null;
 };
 
-const useHeadlessModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+var useHeadlessModal = function useHeadlessModal() {
+  var _useState = useState(false),
+      isOpen = _useState[0],
+      setIsOpen = _useState[1];
 
-  const onModalOpen = () => {
+  var onModalOpen = function onModalOpen() {
     return setIsOpen(true);
   };
 
-  const onModalClose = () => {
+  var onModalClose = function onModalClose() {
     return setIsOpen(false);
   };
 
   return {
-    isOpen,
-    onModalOpen,
-    onModalClose
+    isOpen: isOpen,
+    onModalOpen: onModalOpen,
+    onModalClose: onModalClose
   };
 };
 
