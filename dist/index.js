@@ -31,5 +31,26 @@ var HeadlessModal = function HeadlessModal(_ref) {
   }), modalDOM) : null;
 };
 
-module.exports = HeadlessModal;
+var useHeadlessModal = function useHeadlessModal() {
+  var _useState = React.useState(false),
+      isOpen = _useState[0],
+      setIsOpen = _useState[1];
+
+  var onModalOpen = function onModalOpen() {
+    return setIsOpen(true);
+  };
+
+  var onModalClose = function onModalClose() {
+    return setIsOpen(false);
+  };
+
+  return {
+    isOpen: isOpen,
+    onModalOpen: onModalOpen,
+    onModalClose: onModalClose
+  };
+};
+
+exports.default = HeadlessModal;
+exports.useHeadlessModal = useHeadlessModal;
 //# sourceMappingURL=index.js.map

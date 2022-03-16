@@ -14,7 +14,7 @@ npm install --save react-headless-modal
 
 ```tsx
 import HeadlessModal from 'react-headless-modal'
-import { useHeadlessModal } from 'react-headless-modal/src/hooks'
+import { useHeadlessModal } from 'react-headless-modal'
 
 const containerStyle = {
   display: 'flex',
