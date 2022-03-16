@@ -4,13 +4,22 @@
   "description": "Made with create-react-library",
   "author": "kyuhyunhan",
   "license": "MIT",
-  "repository": "kyuhyunhan/react-headless-modal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyuhyunhan/react-headless-modal.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "react",
+    "headless",
+    "modal"
+  ],
+  "homepage": "https://github.com/kyuhyunhan/react-headless-modal#readme",
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
