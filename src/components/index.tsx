@@ -1,36 +1,46 @@
 import * as React from 'react'
 import { createPortal } from 'react-dom'
-// import styles from './styles.module.css'
+import { createModalElement } from '../utils/createModalElement'
 
-type Props = {
-  defaultIsVisible?: boolean
-  onIsVisible: boolean
-  children: any
-}
+createModalElement()
 
 export const HeadlessModal = ({
-  defaultIsVisible,
-  onIsVisible,
+  isOpen,
+  onModalClose,
+  backdropAlpha = 7,
   children
-}: Props) => {
-  const existedModalElem = document.querySelector('#modal')
-  if (!existedModalElem) {
-    const modalElem = document.createElement('div')
-    const bodyElem = document.querySelector('body')
-    modalElem.id = 'modal'
-    bodyElem && bodyElem.append(modalElem)
-  }
-
-  const [isShown, setIsShown] = React.useState(defaultIsVisible || false)
+}: HeadlessModalProps) => {
+  const [isShown, setIsShown] = React.useState(isOpen || false)
+  // const [backdropAlpha, setBackdropAlpha] = React.useState(3)
 
   const onClose = () => {
+    onModalClose()
     setIsShown(false)
   }
+  // const onBackdropAlpha = (value: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 = 7) => {
+  //   setBackdropAlpha(value)
+  // }
 
   React.useEffect(() => {
-    setIsShown(onIsVisible)
-  }, [onIsVisible])
+    setIsShown(isOpen)
+  }, [isOpen])
 
   const modalDOM = document.getElementById('modal') as HTMLElement
-  return isShown ? createPortal(children({ onClose }), modalDOM) : null
+  const Modal = (
+    <React.Fragment>
+      <div
+        style={{
+          position: 'fixed',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+          background: `rgba(0, 0, 0, ${backdropAlpha * 0.1})`
+        }}
+        onClick={onClose}
+      />
+      <div style={{ position: 'relative', zIndex: 1 }}>{children()}</div>
+    </React.Fragment>
+  )
+  return isShown ? createPortal(Modal, modalDOM) : null
 }

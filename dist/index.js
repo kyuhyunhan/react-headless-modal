@@ -1,10 +1,7 @@
 var React = require('react');
 var reactDom = require('react-dom');
 
-var HeadlessModal = function HeadlessModal(_ref) {
-  var defaultIsVisible = _ref.defaultIsVisible,
-      onIsVisible = _ref.onIsVisible,
-      children = _ref.children;
+var createModalElement = function createModalElement() {
   var existedModalElem = document.querySelector('#modal');
 
   if (!existedModalElem) {
@@ -13,22 +10,46 @@ var HeadlessModal = function HeadlessModal(_ref) {
     modalElem.id = 'modal';
     bodyElem && bodyElem.append(modalElem);
   }
+};
 
-  var _React$useState = React.useState(defaultIsVisible || false),
+createModalElement();
+var HeadlessModal = function HeadlessModal(_ref) {
+  var isOpen = _ref.isOpen,
+      onModalClose = _ref.onModalClose,
+      _ref$backdropAlpha = _ref.backdropAlpha,
+      backdropAlpha = _ref$backdropAlpha === void 0 ? 7 : _ref$backdropAlpha,
+      children = _ref.children;
+
+  var _React$useState = React.useState(isOpen || false),
       isShown = _React$useState[0],
       setIsShown = _React$useState[1];
 
   var onClose = function onClose() {
+    onModalClose();
     setIsShown(false);
   };
 
   React.useEffect(function () {
-    setIsShown(onIsVisible);
-  }, [onIsVisible]);
+    setIsShown(isOpen);
+  }, [isOpen]);
   var modalDOM = document.getElementById('modal');
-  return isShown ? reactDom.createPortal(children({
-    onClose: onClose
-  }), modalDOM) : null;
+  var Modal = React.createElement(React.Fragment, null, React.createElement("div", {
+    style: {
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      top: 0,
+      left: 0,
+      background: "rgba(0, 0, 0, " + backdropAlpha * 0.1 + ")"
+    },
+    onClick: onClose
+  }), React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1
+    }
+  }, children()));
+  return isShown ? reactDom.createPortal(Modal, modalDOM) : null;
 };
 
 var useHeadlessModal = function useHeadlessModal() {

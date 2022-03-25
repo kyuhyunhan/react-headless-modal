@@ -1,53 +1,69 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createElement, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 
-var HeadlessModal = function HeadlessModal(_ref) {
-  var defaultIsVisible = _ref.defaultIsVisible,
-      onIsVisible = _ref.onIsVisible,
-      children = _ref.children;
-  var existedModalElem = document.querySelector('#modal');
+const createModalElement = () => {
+  const existedModalElem = document.querySelector('#modal');
 
   if (!existedModalElem) {
-    var modalElem = document.createElement('div');
-    var bodyElem = document.querySelector('body');
+    const modalElem = document.createElement('div');
+    const bodyElem = document.querySelector('body');
     modalElem.id = 'modal';
     bodyElem && bodyElem.append(modalElem);
   }
+};
 
-  var _React$useState = useState(defaultIsVisible || false),
-      isShown = _React$useState[0],
-      setIsShown = _React$useState[1];
+createModalElement();
+const HeadlessModal = ({
+  isOpen,
+  onModalClose,
+  backdropAlpha: _backdropAlpha = 7,
+  children
+}) => {
+  const [isShown, setIsShown] = useState(isOpen || false);
 
-  var onClose = function onClose() {
+  const onClose = () => {
+    onModalClose();
     setIsShown(false);
   };
 
-  useEffect(function () {
-    setIsShown(onIsVisible);
-  }, [onIsVisible]);
-  var modalDOM = document.getElementById('modal');
-  return isShown ? createPortal(children({
-    onClose: onClose
-  }), modalDOM) : null;
+  useEffect(() => {
+    setIsShown(isOpen);
+  }, [isOpen]);
+  const modalDOM = document.getElementById('modal');
+  const Modal = createElement(Fragment, null, createElement("div", {
+    style: {
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      top: 0,
+      left: 0,
+      background: `rgba(0, 0, 0, ${_backdropAlpha * 0.1})`
+    },
+    onClick: onClose
+  }), createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1
+    }
+  }, children()));
+  return isShown ? createPortal(Modal, modalDOM) : null;
 };
 
-var useHeadlessModal = function useHeadlessModal() {
-  var _useState = useState(false),
-      isOpen = _useState[0],
-      setIsOpen = _useState[1];
+const useHeadlessModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  var onModalOpen = function onModalOpen() {
+  const onModalOpen = () => {
     return setIsOpen(true);
   };
 
-  var onModalClose = function onModalClose() {
+  const onModalClose = () => {
     return setIsOpen(false);
   };
 
   return {
-    isOpen: isOpen,
-    onModalOpen: onModalOpen,
-    onModalClose: onModalClose
+    isOpen,
+    onModalOpen,
+    onModalClose
   };
 };
 
