@@ -54,21 +54,21 @@ var HeadlessModal = function HeadlessModal(_ref) {
 
 var useHeadlessModal = function useHeadlessModal() {
   var _useState = React.useState(false),
-      isOpen = _useState[0],
-      setIsOpen = _useState[1];
+      isModalOpen = _useState[0],
+      setIsModalOpen = _useState[1];
 
-  var onModalOpen = function onModalOpen() {
-    return setIsOpen(true);
+  var openModal = function openModal() {
+    return setIsModalOpen(true);
   };
 
-  var onModalClose = function onModalClose() {
-    return setIsOpen(false);
+  var closeModal = function closeModal() {
+    return setIsModalOpen(false);
   };
 
   return {
-    isOpen: isOpen,
-    onModalOpen: onModalOpen,
-    onModalClose: onModalClose
+    isModalOpen: isModalOpen,
+    openModal: openModal,
+    closeModal: closeModal
   };
 };
 

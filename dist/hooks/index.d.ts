@@ -1,5 +1,5 @@
 export declare const useHeadlessModal: () => {
     isOpen: boolean;
-    onModalOpen: () => void;
-    onModalClose: () => void;
+    openModal: () => void;
+    closeModal: () => void;
 };

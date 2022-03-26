@@ -50,20 +50,20 @@ const HeadlessModal = ({
 };
 
 const useHeadlessModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onModalOpen = () => {
-    return setIsOpen(true);
+  const openModal = () => {
+    return setIsModalOpen(true);
   };
 
-  const onModalClose = () => {
-    return setIsOpen(false);
+  const closeModal = () => {
+    return setIsModalOpen(false);
   };
 
   return {
-    isOpen,
-    onModalOpen,
-    onModalClose
+    isModalOpen,
+    openModal,
+    closeModal
   };
 };
 

@@ -2,18 +2,18 @@ import { HeadlessModal } from './components'
 import { useState } from 'react'
 
 export const useHeadlessModal = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const onModalOpen = () => {
-    return setIsOpen(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => {
+    return setIsModalOpen(true)
   }
-  const onModalClose = () => {
-    return setIsOpen(false)
+  const closeModal = () => {
+    return setIsModalOpen(false)
   }
 
   return {
-    isOpen,
-    onModalOpen,
-    onModalClose
+    isModalOpen,
+    openModal,
+    closeModal
   }
 }
 

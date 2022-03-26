@@ -1,7 +1,7 @@
 import { HeadlessModal } from './components';
 export declare const useHeadlessModal: () => {
-    isOpen: boolean;
-    onModalOpen: () => void;
-    onModalClose: () => void;
+    isModalOpen: boolean;
+    openModal: () => void;
+    closeModal: () => void;
 };
 export default HeadlessModal;
