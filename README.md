@@ -12,43 +12,54 @@ npm install --save react-headless-modal
 
 ## Usage
 
+You have to use at least 2 div elements, one for a backdrop and the other for a modal.
+
 ```tsx
 import HeadlessModal from 'react-headless-modal'
 import { useHeadlessModal } from 'react-headless-modal'
 
-const containerStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: `100vw`,
-  height: '100vh',
-  background: 'rgba(0,0,0,0.2)'
-}
+const backdropStyle = {
+  position: 'fixed',
+  width: '100%',
+  height: '100%',
+  top: ' 0',
+  left: '0',
+  background: `rgba(0, 0, 0, 0.4)`
+} as React.CSSProperties
 const modalStyle = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  outline: '0',
   width: '300px',
   height: '200px',
-  background: 'red'
-}
+  backgroundColor: '#fff'
+} as React.CSSProperties
 
 const App = () => {
-  const { isOpen, onModalOpen, onModalClose } = useHeadlessModal()
+  const { isModalOpen, openModal, closeModal } = useHeadlessModal()
+
   const buttonClickHandler = () => {
-    onModalOpen()
+    openModal()
   }
 
   return (
     <>
       <button onClick={buttonClickHandler} />
-      <HeadlessModal defaultIsVisible={true} onIsVisible={isOpen}>
+      <HeadlessModal isOpen={isModalOpen}>
         {() => (
-          <div style={containerStyle} onClick={onModalClose}>
+          <>
+            <div style={backdropStyle} onClick={closeModal} />
             <div style={modalStyle}>Modal</div>
-          </div>
+          </>
         )}
       </HeadlessModal>
     </>
   )
 }
+
+export default App
 ```
 
 ## License
