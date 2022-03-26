@@ -6,6 +6,6 @@ createModalElement()
 
 export const HeadlessModal = ({ isOpen, children }: HeadlessModalProps) => {
   const modalDOM = document.getElementById('modal') as HTMLElement
-  const Modal = <>{children()}</>
+  const Modal = <React.Fragment>{children()}</React.Fragment>
   return isOpen ? createPortal(Modal, modalDOM) : null
 }
